@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HallGest.Models.Customer>
+
+<p>
+    @Html.ActionLink("Aggiungi Cliente", "CreateCustomer", "Customer", null, new { @class = "btn btn-primary"})
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FiscalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MobileNum)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FiscalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobileNum)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CustomerID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })
+        </td>
+    </tr>
+}
+
+</table>
