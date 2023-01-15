@@ -24,7 +24,11 @@ namespace HallGest.Models
 
         public string Fee { get; set; }
 
+        public int Board { get; set; }
+
         public string BoardType { get; set; }
+
+        public int CustomerID { get; set; }
 
         public string CustomerName { get; set; }
 
@@ -93,6 +97,35 @@ namespace HallGest.Models
               
 
             return ReservationsList;
+        }
+
+        public static void AddReservation(Reservation current, int customerID)
+        {
+            Customer currentCustomer = Customer.GetByID(customerID);
+
+            SqlConnection con = ConControl.DBConnection();
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO ReservationTab VALUES (@ResDate, @YearSerial, @DF, @DT, @ResYear, @Deposit, @Fee, @Board, @CustomerID, @RoomNum)", con);
+            cmd.Parameters.AddWithValue("ResDate", DateTime.Now.ToString("d"));
+            cmd.Parameters.AddWithValue("YearSerial", current.ResYear + "-" + current.ReservationID);
+            cmd.Parameters.AddWithValue("DF", current.DateFrom);
+            cmd.Parameters.AddWithValue("DT", current.DateTo);
+            if(current.ResYear != null)
+            {
+                cmd.Parameters.AddWithValue("ResYear", current.ResYear);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("ResYear", string.Empty);
+            }
+            cmd.Parameters.AddWithValue("Deposit", current.Deposit);
+            cmd.Parameters.AddWithValue("Fee", current.Fee);
+            cmd.Parameters.AddWithValue("Board", current.Board);
+            cmd.Parameters.AddWithValue("CustomerID", current.CustomerID);
+            cmd.Parameters.AddWithValue("RoomNum", current.RoomNum);
+
+            cmd.ExecuteNonQuery();
         }
         
     }

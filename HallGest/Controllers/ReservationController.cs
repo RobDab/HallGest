@@ -26,23 +26,45 @@ namespace HallGest.Controllers
         }
 
         // GET: Reservation/Create
-        public ActionResult Create()
+        public ActionResult CreateReservation(int id)
         {
+            // Codice per reperire lista dei BoardTypes
+            List<SelectListItem> BoardDDLItems = new List<SelectListItem>();  
+            try
+            {
+                List<Board> boardList = Board.GetAllBoards();
+                foreach(Board b in boardList)
+                {
+                    SelectListItem board = new SelectListItem();
+                    board.Text = b.BoardType;
+                    board.Value = b.BoardTypeID.ToString();
+                    BoardDDLItems.Add(board);
+                }
+                ViewBag.BoardList = BoardDDLItems;
+               
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrMsg = ex.Message;
+            }
             return View();
         }
 
         // POST: Reservation/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateReservation(Reservation current, int customerID)
         {
+            //Customer currentCustomer = Customer.GetByID(customerID);
+
             try
             {
-                // TODO: Add insert logic here
+                Reservation.AddReservation(current, customerID);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Home", "Home");
             }
-            catch
+            catch(Exception ex)
             {
+                ViewBag.ErrMsg = ex.Message;
                 return View();
             }
         }
