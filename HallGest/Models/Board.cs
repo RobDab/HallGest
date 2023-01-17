@@ -36,7 +36,7 @@ namespace HallGest.Models
             }
 
             con.Close();
-            return new List<Board>();
+            return boardList;
         }
     }
 }
